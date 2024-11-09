@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:application/components/stat_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -20,10 +21,6 @@ class _LayoutPageState extends State<LayoutPage> {
 
   String _currentTime = '';
   String _currentDate = '';
-  String bpm = "72";
-  String spo2 = "98";
-  String nibp = "120/80";
-  String etco2 = "35";
 
   @override
   void initState() {
@@ -197,25 +194,7 @@ class _LayoutPageState extends State<LayoutPage> {
                       // Top bar
 
                       // Statistics bar
-                      if (_hasStats)
-                        Container(
-                          height: 95,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              _buildMetricContainer(
-                                  "BPM", bpm, Colors.green, true),
-                              _buildMetricContainer(
-                                  "SPO2", spo2, Colors.blue, true),
-                              _buildMetricContainer(
-                                  "NIBP", nibp, Colors.red, false),
-                              _buildMetricContainer(
-                                  "ETCO2", etco2, Colors.black54, true),
-                              _buildMetricContainer(
-                                  "SPO2", spo2, Colors.blue, true),
-                            ],
-                          ),
-                        ),
+                      if (_hasStats) StatBar(),
 
                       // Action bar
                       Container(
@@ -277,61 +256,4 @@ class _LayoutPageState extends State<LayoutPage> {
       ),
     );
   }
-}
-
-Widget _buildMetricContainer(
-    String title, String value, Color color, bool hasMinMax) {
-  return Expanded(
-    child: Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
-      ),
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: color,
-                height: 1),
-          ),
-          Row(
-            children: [
-              Text(
-                value,
-                style: TextStyle(
-                    fontSize: 60,
-                    fontWeight: FontWeight.w600,
-                    color: color,
-                    height: 1),
-              ),
-              if (hasMinMax)
-                Column(
-                  children: [
-                    Text(
-                      "45",
-                      style: TextStyle(
-                          fontSize: 24,
-                          color: color,
-                          fontWeight: FontWeight.w500,
-                          height: 1),
-                    ),
-                    Text("45",
-                        style: TextStyle(
-                            fontSize: 24,
-                            color: color,
-                            fontWeight: FontWeight.w500,
-                            height: 1))
-                  ],
-                ),
-            ],
-          ),
-        ],
-      ),
-    ),
-  );
 }
