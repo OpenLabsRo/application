@@ -95,10 +95,12 @@ class _HomepageState extends State<Homepage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LayoutPage()),
-                      );
+                      Future.delayed(const Duration(seconds: 3), () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AcceptCase()),
+                        );
+                      });
                     },
                     child: MainscreenButton(
                       color: Colors.blue,

@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
 
-class SubTabBar extends StatefulWidget {
-  final Map<String, VoidCallback> tabs;
+class SubTabBar extends StatelessWidget {
+  final List<String> tabs;
+  final String selectedTab;
+  final ValueChanged<String> onTabSelected;
 
-  const SubTabBar({super.key, required this.tabs});
-
-  @override
-  State<SubTabBar> createState() => _SubTabBarState();
-}
-
-class _SubTabBarState extends State<SubTabBar> {
-  String? selectedTab;
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize the first tab as selected by default (optional)
-    if (widget.tabs.isNotEmpty) {
-      selectedTab = widget.tabs.keys.first;
-    }
-  }
+  const SubTabBar({
+    super.key,
+    required this.tabs,
+    required this.selectedTab,
+    required this.onTabSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +20,15 @@ class _SubTabBarState extends State<SubTabBar> {
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: widget.tabs.entries.map((entry) {
-          bool isSelected = entry.key == selectedTab;
+        children: tabs.map((tab) {
+          bool isSelected = tab == selectedTab;
           return Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: TextButton(
-              onPressed: () {
-                setState(() {
-                  selectedTab = entry.key;
-                });
-                entry.value();
-              },
+              onPressed: () => onTabSelected(tab),
               style: TextButton.styleFrom(
                 backgroundColor: isSelected
-                    ? const Color.fromARGB(
-                        255, 3, 46, 111) // Darker background for selected tab
+                    ? const Color.fromARGB(255, 3, 46, 111)
                     : Colors.transparent,
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 shape: RoundedRectangleBorder(
@@ -51,7 +36,7 @@ class _SubTabBarState extends State<SubTabBar> {
                 ),
               ),
               child: Text(
-                entry.key,
+                tab,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w700,
