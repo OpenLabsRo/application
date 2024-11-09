@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:application/components/stat_bar.dart';
+import 'package:application/components/sub_tab_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -127,7 +128,7 @@ class _LayoutPageState extends State<LayoutPage> {
                 AnimatedContainer(
                   duration: Duration(milliseconds: 300),
                   width: _isSidebarOpen ? 250.0 : 0.0,
-                  color: Color(0xFFB3B3B3),
+                  color: Color(0xFFEAEAEA),
                   child: Column(
                     children: [
                       SizedBox(
@@ -197,45 +198,8 @@ class _LayoutPageState extends State<LayoutPage> {
                       if (_hasStats) StatBar(),
 
                       // Action bar
-                      Container(
-                        height: 50,
-                        color: const Color.fromARGB(255, 8, 103, 236),
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    // Add event details functionality here
-                                  },
-                                  child: Text(
-                                    "Event Details",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 20),
-                                  ),
-                                ),
-                                SizedBox(width: 20),
-                                TextButton(
-                                  onPressed: () {
-                                    // Add patient data functionality here
-                                  },
-                                  child: Text(
-                                    "Patient Data",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 20),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                      SubTabBar(
+                        tabs: {'Event Details': () {}, 'Patient Data': () {}},
                       ),
 
                       // Main content
