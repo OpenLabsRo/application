@@ -20,7 +20,7 @@ class UsualSymptoms {
   factory UsualSymptoms.fromJson(Map<String, dynamic> json) =>
       _$UsualSymptomsFromJson(json);
 
-  Map<String, dynamic> toJson() => _$SecondaryEvaluationToJson(this);
+  Map<String, dynamic> toJson() => _$UsualSymptomsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)

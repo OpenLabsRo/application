@@ -9,32 +9,32 @@ part 'case.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Case {
-  final String id;
-  final String dispatcherID;
+  String? id;
+  String? dispatcherID;
 
-  final Intervention intervention;
-  final Patient patient;
+  Intervention? intervention;
+  Patient? patient;
 
-  final PrimaryEvaluation primaryEvaluation;
-  final SecondaryEvaluation secondaryEvaluation;
+  PrimaryEvaluation? primaryEvaluation;
+  SecondaryEvaluation? secondaryEvaluation;
 
-  final Procedures procedures;
+  Procedures? procedures;
 
-  final String teamID;
-  final String hospitalID;
-  final DateTime createdAt;
+  String? teamID;
+  String? hospitalID;
+  DateTime? createdAt;
 
   Case({
-    required this.id,
-    required this.dispatcherID,
-    required this.intervention,
-    required this.patient,
-    required this.primaryEvaluation,
-    required this.secondaryEvaluation,
-    required this.procedures,
-    required this.teamID,
-    required this.hospitalID,
-    required this.createdAt,
+    this.id,
+    this.dispatcherID,
+    this.intervention,
+    this.patient,
+    this.primaryEvaluation,
+    this.secondaryEvaluation,
+    this.procedures,
+    this.teamID,
+    this.hospitalID,
+    this.createdAt,
   });
 
   factory Case.fromJSON(Map<String, dynamic> json) => _$CaseFromJson(json);

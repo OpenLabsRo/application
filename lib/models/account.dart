@@ -16,8 +16,8 @@ class Account {
       required this.lastName,
       required this.phone});
 
-  factory Account.fromJSON(Map<String, dynamic> json) =>
+  factory Account.fromJson(Map<String, dynamic> json) =>
       _$AccountFromJson(json);
 
-  Map<String, dynamic> toJSON() => _$AccountToJson(this);
+  Map<String, dynamic> toJson() => _$AccountToJson(this);
 }
