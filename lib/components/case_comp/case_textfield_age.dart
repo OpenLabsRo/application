@@ -4,21 +4,31 @@ import 'package:flutter/material.dart';
 class CaseDOBField extends StatefulWidget {
   final String title;
   final bool unknown;
+  final DateTime? initialDate; // New: Initial date
+  final ValueChanged<DateTime?>?
+      onDateChanged; // New: Callback for date changes
 
-  const CaseDOBField({required this.title, required this.unknown, Key? key})
-      : super(key: key);
+  const CaseDOBField({
+    required this.title,
+    required this.unknown,
+    this.initialDate,
+    this.onDateChanged,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _CaseDOBFieldState createState() => _CaseDOBFieldState();
 }
 
 class _CaseDOBFieldState extends State<CaseDOBField> {
-  DateTime? _selectedDate;
-  TextEditingController _controller = TextEditingController();
+  late DateTime? _selectedDate;
+  late TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
+    _selectedDate = widget.initialDate; // Set initial date
+    _controller = TextEditingController();
     _updateTextField();
   }
 
@@ -32,8 +42,7 @@ class _CaseDOBFieldState extends State<CaseDOBField> {
   }
 
   Future<void> _showDatePicker(BuildContext context) async {
-    DateTime initialDate = DateTime.now()
-        .subtract(Duration(days: 365 * 25)); // default to 25 years ago
+    DateTime initialDate = _selectedDate ?? DateTime.now();
     showCupertinoModalPopup(
       context: context,
       builder: (_) => Container(
@@ -47,11 +56,20 @@ class _CaseDOBFieldState extends State<CaseDOBField> {
             setState(() {
               _selectedDate = date;
               _updateTextField();
+              if (widget.onDateChanged != null) {
+                widget.onDateChanged!(date); // Notify parent
+              }
             });
           },
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -74,7 +92,7 @@ class _CaseDOBFieldState extends State<CaseDOBField> {
             child: TextField(
               controller: _controller,
               readOnly:
-                  !widget.unknown, // make it read-only when unknown is false
+                  !widget.unknown, // Make it read-only when unknown is false
               keyboardType:
                   widget.unknown ? TextInputType.number : TextInputType.none,
               onTap: widget.unknown

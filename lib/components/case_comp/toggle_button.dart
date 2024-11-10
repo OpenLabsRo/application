@@ -4,7 +4,7 @@ class ToggleButton extends StatefulWidget {
   final String title;
   final String option1;
   final String option2;
-  final String initialValue; // To hold the initial selected value
+  final String? initialSelected; // Allow null for no initial selection
   final ValueChanged<String>? onChanged; // Callback when the selection changes
 
   const ToggleButton({
@@ -12,7 +12,7 @@ class ToggleButton extends StatefulWidget {
     required this.title,
     required this.option1,
     required this.option2,
-    this.initialValue = '',
+    this.initialSelected,
     this.onChanged,
   }) : super(key: key);
 
@@ -21,13 +21,13 @@ class ToggleButton extends StatefulWidget {
 }
 
 class _ToggleButtonState extends State<ToggleButton> {
-  String? _selectedValue; // Allow null for no initial selection
+  String? _selectedValue;
 
   @override
   void initState() {
     super.initState();
-    _selectedValue =
-        widget.initialValue.isNotEmpty ? widget.initialValue : null;
+    // Set the initial selected value if provided
+    _selectedValue = widget.initialSelected;
   }
 
   @override
@@ -66,9 +66,8 @@ class _ToggleButtonState extends State<ToggleButton> {
                         setState(() {
                           _selectedValue = value; // Update selected value
                         });
-                        if (widget.onChanged != null) {
-                          widget
-                              .onChanged!(_selectedValue!); // Call the callback
+                        if (widget.onChanged != null && value != null) {
+                          widget.onChanged!(value); // Call the callback
                         }
                       },
                       activeColor:
@@ -97,9 +96,8 @@ class _ToggleButtonState extends State<ToggleButton> {
                         setState(() {
                           _selectedValue = value; // Update selected value
                         });
-                        if (widget.onChanged != null) {
-                          widget
-                              .onChanged!(_selectedValue!); // Call the callback
+                        if (widget.onChanged != null && value != null) {
+                          widget.onChanged!(value); // Call the callback
                         }
                       },
                       activeColor:
