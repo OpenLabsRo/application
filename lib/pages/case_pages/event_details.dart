@@ -15,15 +15,15 @@ class _EventDetailsState extends State<EventDetails> {
 
   // Mock data for the fields
   final Map<String, String> _mockData = {
-    "Caller Phone Number": "123-456-7890",
-    "Case Code": "CASE1234",
-    "Activation Protocol": "Standard",
-    "Solicitant": "John Doe",
-    "Case Address": "123 Main Street",
-    "Address Details": "Apt 4B, near the park",
-    "Hazards": "Slippery surface",
-    "Assets On Scene": "Ambulance, Fire Truck",
-    "Description": "A fire broke out in the apartment, possible injuries."
+    "Caller Phone Number": "07354436453",
+    "Case Code": "Orange",
+    "Activation Protocol": "Unconscious Person",
+    "Solicitant": "Gabriel Stanciu",
+    "Case Address": "Splaiul Tudor Vladimirescu 11",
+    "Address Details": "Near the river bank",
+    "Hazards": "",
+    "Assets On Scene": "",
+    "Description": "Unconscious person fell, CT possible."
   };
 
   // Controllers for each field
@@ -140,11 +140,12 @@ class _EventDetailsState extends State<EventDetails> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               GestureDetector(
-                onLongPress: () {
-                  _startFillingFields;
+                onTap: () {
+                  _startFillingFields();
                 },
                 child: Container(
-                  height: 50,
+                  color: Colors.black.withOpacity(0.01),
+                  height: 20,
                   width: 200,
                 ),
               ),

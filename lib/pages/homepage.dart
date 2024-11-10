@@ -132,9 +132,17 @@ class _HomepageState extends State<Homepage> {
                   SizedBox(
                     height: 20,
                   ),
-                  MainscreenButton(
-                    color: Colors.red,
-                    text: "Log-Out",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LayoutPage()),
+                      );
+                    },
+                    child: MainscreenButton(
+                      color: Colors.red,
+                      text: "Log-Out",
+                    ),
                   ),
                 ],
               ),

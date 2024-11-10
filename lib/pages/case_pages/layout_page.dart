@@ -5,8 +5,13 @@ import 'package:application/pages/case_pages/airway_page.dart';
 import 'package:application/pages/case_pages/breathing_page.dart';
 import 'package:application/pages/case_pages/circulation_page.dart';
 import 'package:application/pages/case_pages/event_details.dart';
+import 'package:application/pages/case_pages/hemostasis_page.dart';
+import 'package:application/pages/case_pages/intubation_page.dart';
+import 'package:application/pages/case_pages/ivio_access.dart';
 import 'package:application/pages/case_pages/mental_status_page.dart';
 import 'package:application/pages/case_pages/patient_data.dart';
+import 'package:application/pages/case_pages/trauma_page.dart';
+import 'package:application/pages/case_pages/trauma_procedure.dart';
 import 'package:application/pages/case_pages/usual_symtoms_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +23,10 @@ class LayoutPage extends StatefulWidget {
 }
 
 class _LayoutPageState extends State<LayoutPage> {
-  bool _isSidebarOpen = true;
-  bool _isAISidebarOpen = true; // Added variable to track AI sidebar visibility
-  bool _hasStats = true;
+  bool _isSidebarOpen = false;
+  bool _isAISidebarOpen =
+      false; // Added variable to track AI sidebar visibility
+  bool _hasStats = false;
 
   // Track current selected tab and sub-tab
   String _selectedSidebarTab = 'Event Details';
@@ -40,7 +46,14 @@ class _LayoutPageState extends State<LayoutPage> {
     },
     'Secondary Evaluation': {
       "Usual Symptoms": UsualSymptomsPage(),
+      "Trauma": TraumaPage(),
     },
+    'Procedures': {
+      "Intubation": IntubationPage(),
+      "Trauma": TraumaProcedurePage(),
+      "Hemostasis": HemostasisPage(),
+      "IV/IO Access": IVIOAccessPage(),
+    }
     // Add other sidebar items and their sub-tabs here
   };
 
@@ -124,14 +137,7 @@ class _LayoutPageState extends State<LayoutPage> {
                           fontWeight: FontWeight.w700,
                           fontSize: 22),
                     ),
-                    SizedBox(width: 20),
-                    Text(
-                      "Police",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 22),
-                    ),
+
                     SizedBox(width: 20),
                     Text(
                       "Request a Hospital",
@@ -190,25 +196,32 @@ class _LayoutPageState extends State<LayoutPage> {
                             children: [
                               // Sidebar items
                               ListTile(
-                                leading: Icon(Icons.home, color: Colors.black),
+                                leading: Icon(Icons.event, color: Colors.black),
                                 title: Text("Event Details"),
                                 onTap: () =>
                                     _onSidebarItemTapped('Event Details'),
                               ),
                               ListTile(
-                                leading:
-                                    Icon(Icons.person, color: Colors.black),
+                                leading: Icon(Icons.health_and_safety,
+                                    color: Colors.black),
                                 title: Text("Primary Evaluation"),
                                 onTap: () =>
                                     _onSidebarItemTapped('Primary Evaluation'),
                               ),
                               ListTile(
                                 leading:
-                                    Icon(Icons.person, color: Colors.black),
+                                    Icon(Icons.assignment, color: Colors.black),
                                 title: Text("Secondary Evaluation"),
                                 onTap: () => _onSidebarItemTapped(
                                     'Secondary Evaluation'),
                               ),
+                              ListTile(
+                                leading: Icon(Icons.medical_services,
+                                    color: Colors.black),
+                                title: Text("Procedures"),
+                                onTap: () => _onSidebarItemTapped('Procedures'),
+                              ),
+
                               // Add other sidebar items here
                             ],
                           ),

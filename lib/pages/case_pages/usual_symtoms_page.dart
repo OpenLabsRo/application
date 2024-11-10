@@ -50,7 +50,7 @@ class _UsualSymptomsPageState extends State<UsualSymptomsPage> {
           GestureDetector(
             onTap: () => _showDropdown(
                 context,
-                ["Nausea", "Vomiting", "Sweating", "Dizziness", "Pain"],
+                ["", "Nausea", "Vomiting", "Sweating", "Dizziness", "Pain"],
                 _onSymptomChanged),
             child: Container(
               height: 60,
