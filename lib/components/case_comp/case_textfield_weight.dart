@@ -2,24 +2,34 @@ import 'package:flutter/material.dart';
 
 class CaseTextfieldWeight extends StatefulWidget {
   final String title;
-  const CaseTextfieldWeight({required this.title, super.key});
+  final TextEditingController? controller; // Add controller as a parameter
+
+  const CaseTextfieldWeight({
+    required this.title,
+    this.controller,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _CaseTextfieldWeightState createState() => _CaseTextfieldWeightState();
 }
 
 class _CaseTextfieldWeightState extends State<CaseTextfieldWeight> {
-  late TextEditingController _controller;
+  late TextEditingController _internalController;
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
 
-    _controller.addListener(() {
-      if (!_controller.text.endsWith(" kg")) {
-        final textWithoutSuffix = _controller.text.replaceAll(" kg", "");
-        _controller.value = _controller.value.copyWith(
+    // Use the provided controller or create an internal one
+    _internalController = widget.controller ?? TextEditingController();
+
+    // Add the "kg" suffix behavior
+    _internalController.addListener(() {
+      if (!_internalController.text.endsWith(" kg")) {
+        final textWithoutSuffix =
+            _internalController.text.replaceAll(" kg", "");
+        _internalController.value = _internalController.value.copyWith(
           text: "$textWithoutSuffix kg",
           selection: TextSelection.collapsed(offset: textWithoutSuffix.length),
         );
@@ -29,7 +39,10 @@ class _CaseTextfieldWeightState extends State<CaseTextfieldWeight> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    // Dispose the internal controller only if it's not provided from outside
+    if (widget.controller == null) {
+      _internalController.dispose();
+    }
     super.dispose();
   }
 
@@ -51,7 +64,7 @@ class _CaseTextfieldWeightState extends State<CaseTextfieldWeight> {
           SizedBox(height: 10),
           Expanded(
             child: TextField(
-              controller: _controller,
+              controller: _internalController,
               cursorColor: Colors.black,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
