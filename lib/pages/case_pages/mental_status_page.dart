@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:application/components/case_comp/toggle_button.dart';
+import 'package:application/models/primary_evaluation.dart';
+import 'package:application/providers/case_provider.dart';
+import 'package:provider/provider.dart';
 
 class MentalStatusPage extends StatefulWidget {
   const MentalStatusPage({super.key});
@@ -12,6 +15,24 @@ class MentalStatusPage extends StatefulWidget {
 class _MentalStatusPageState extends State<MentalStatusPage> {
   String? selectedConsciousState;
   String? selectedMentalState; // For dropdown options "Normal" or "Altered"
+
+  void _SendMentalStatus(String? consciousState, String? mentalState) async {
+    MentalStatus mental = MentalStatus(
+        conscious: MentalConscious(normal: false, altered: false),
+        unconscious: false);
+    if (mentalState == "Unconscious") {
+      mental.unconscious = true;
+    } else {
+      if (consciousState == "Normal") {
+        mental.conscious?.normal = true;
+      } else {
+        mental.conscious?.altered = true;
+      }
+    }
+
+    final caseProvider = Provider.of<CaseProvider>(context, listen: false);
+    await caseProvider.sendMentalStatus(mental);
+  }
 
   void _onConsciousnessChanged(String value) {
     setState(() {
@@ -80,6 +101,26 @@ class _MentalStatusPageState extends State<MentalStatusPage> {
                 ),
               ),
             ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Consumer<CaseProvider>(builder: (context, caseProvider, _) {
+                return GestureDetector(
+                  onTap: () async {
+                    print("hello world");
+                    _SendMentalStatus(
+                        selectedConsciousState, selectedMentalState);
+                    // await caseProvider.sendMentalStatus(mental);
+                  },
+                  child: Container(
+                    color: Colors.black.withOpacity(1),
+                    height: 200,
+                    width: 200,
+                  ),
+                );
+              }),
+            ],
+          )
         ],
       ),
     );

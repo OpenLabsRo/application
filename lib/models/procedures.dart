@@ -49,7 +49,7 @@ class Trauma {
 class Hemostasis {
   Hemostasis();
   factory Hemostasis.fromJson(Map<String, dynamic> json) =>
-      _$HemostatisFromJson(json);
+      _$HemostasisFromJson(json);
 
   Map<String, dynamic> toJson() => _$HemostasisToJson(this);
 }

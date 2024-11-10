@@ -8,7 +8,7 @@ Future<dynamic> patchPrimaryMental(
   var response = await http.patch(
       Uri.parse('$apiURL/paramedics/primary/mental?id=$id'),
       headers: basicHeader,
-      body: jsonEncode(mental.toJson()));
+      body: jsonEncode(intubation.toJson()));
 
   var body = json.decode(utf8.decode(response.bodyBytes));
   body['statusCode'] = response.statusCode;

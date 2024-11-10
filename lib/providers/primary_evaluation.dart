@@ -3,12 +3,13 @@ import 'package:http/http.dart' as http;
 import 'package:application/models/primary_evaluation.dart';
 import 'dart:convert';
 
-Future<dynamic> patchPrimaryMental(
-    String token, String id, MentalStatus mental) async {
+Future<dynamic> patchPrimaryMental(String id, MentalStatus mental) async {
   var response = await http.patch(
       Uri.parse('$apiURL/paramedics/primary/mental?id=$id'),
       headers: basicHeader,
       body: jsonEncode(mental.toJson()));
+  print("RESPONSE");
+  print(response);
 
   var body = json.decode(utf8.decode(response.bodyBytes));
   body['statusCode'] = response.statusCode;
@@ -16,8 +17,7 @@ Future<dynamic> patchPrimaryMental(
   return body;
 }
 
-Future<dynamic> patchPrimaryAirways(
-    String token, String id, Airways airways) async {
+Future<dynamic> patchPrimaryAirways(String id, Airways airways) async {
   var response = await http.patch(
       Uri.parse('$apiURL/paramedics/primary/airways?id=$id'),
       headers: basicHeader,
